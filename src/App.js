@@ -5,7 +5,11 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
+                <img
+                    src="../images/rocket-ele-logo.png"
+                    className="App-logo" // fait tourner le logo
+                    alt="logo"
+                />
                 <p>
                     Edit <code>src/App.js</code> and save to reload. <br /> Just
                     some random test...
