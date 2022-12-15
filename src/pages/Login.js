@@ -1,17 +1,42 @@
 import React, { useState } from "react";
 import Logo from "../components/Logo";
 import Title from "../components/Title";
-
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Home from "./Home";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const authenticateUser = async (navigate) => {
+    try {
+        const res = await axios.post(
+            "/authenticate?email=customer1@business.com&password=password123"
+        );
+
+        // console.log("res is:", res);
+        // console.log("res is:", res.data);
+        console.log("res is:", res.data.access_token);
+
+        localStorage.setItem("token", res.data.access_token);
+        navigate("/home");
+        // setToken(res.data.access_token);
+        // navigate("/home");
+    } catch (error) {
+        console.warn("[authenticateUser] error:", error);
+    }
+};
 
 const Login = (props) => {
-    const [inputValue, setValue] = useState("Please entreer you Email");
+    const navigate = useNavigate();
+    const [inputValue, setValue] = useState("Please enter your Email");
     const handleChange = (event) => {
         setValue(event.target.value);
     };
     const handleSubmit = (e) => {
+        e.preventDefault();
         console.log("e", e);
+
+        authenticateUser(navigate);
     };
 
     console.log(inputValue);
@@ -29,27 +54,12 @@ const Login = (props) => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="password" />
                 </Form.Group>
-
-                {/* <label htmlFor="email">Email</label>
-                <input
-                    id="email"
-                    name="email"
-                    type="text"
-                    onChange={handleChange}
-                    value={inputValue}
-                /> */}
-
                 <br />
-
-                {/* <label htmlFor="password">Password</label>
-                <input type="password" value="" id="password" name="password" /> */}
-
                 <Button type="submit">Login</Button>
-
-                {/* <a href="#">Forget password ?</a> */}
             </Form>
         </>
     );
+    <button href="Form.js"></button>;
 };
 
 export default Login;
