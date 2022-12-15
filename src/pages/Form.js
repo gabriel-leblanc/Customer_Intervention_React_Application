@@ -1,40 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import Title from "../components/Title";
+import Logo from "../components/Logo";
+
+const authenticateUser = async (setToken) => {
+    try {
+        const res = await axios.post(
+            "/authenticate?email=customer1@business.com&password=password123"
+        );
+
+        setToken(res.data.access_token);
+    } catch (error) {
+        console.warn("[authenticateUser] error:", error);
+    }
+};
+
+const getInterventions = async (token, setInterventions) => {
+    try {
+        const res = await axios.get("/interventions", {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
+
+        setInterventions(res.data);
+    } catch (error) {
+        console.warn("[getInterventions] error:", error);
+    }
+};
 
 const Form = () => {
-    const token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lcjFAYnVzaW5lc3MuY29tIiwiaXNzIjoiaHR0cHM6Ly9qYXZhLWFwaS5jb2RlYm94eHRlc3QueHl6L2F1dGhlbnRpY2F0ZSJ9.QbJsJ-MZXWieFf_fcAkNWI3S9Skqd-yFVF3S2h-uhfo";
-    const handleAxios = () => {
-        axios
-            // .get(
-            //     "https://java-api.codeboxxtest.xyz/authenticate?email=customer1@business.com&password=password123",
-            //     {
-            //         headers: {
-            //             Authorization: "Bearer " + token,
-            //         },
-            //     }
-            // )
-            .post(
-                "https://java-api.codeboxxtest.xyz/authenticate?email=customer1%40business.com&password=password123",
-                {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                    },
-                }
-            )
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
+    const [token, setToken] = useState("");
+    const [interventions, setInterventions] = useState(null);
+
+    useEffect(() => {
+        console.log("token changed:", token);
+    }, [token]);
+
+    useEffect(() => {
+        console.log("interventions changed:", interventions);
+    }, [interventions]);
+
     return (
         <>
+            <Logo />
             <Title>Form</Title>
-            <button onClick={handleAxios}>Submit Axios</button>
+            <button onClick={() => authenticateUser(setToken)}>
+                Submit Axios
+            </button>
+            <br />
+            <button
+                onClick={() => {
+                    console.log("my token is:", token);
+                }}
+            >
+                Test token
+            </button>
+            <br />
+            <button
+                onClick={() => {
+                    console.log("my interventions is:", interventions);
+                }}
+            >
+                Test interventions
+            </button>
+            <br />
+            <button onClick={() => getInterventions(token, setInterventions)}>
+                Get interventions test
+            </button>
         </>
     );
 };

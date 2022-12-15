@@ -16,3 +16,25 @@
 .App-link {
     color: #61dafb;
 }
+
+.login-page {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+.login-page label {
+    padding: 0;
+    display: block;
+    margin-bottom: 12px;
+    text-align: left;
+}
+.login-page input {
+    padding: 6px 12px;
+    display: block;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.btn {
+    background-color: red;
+}
