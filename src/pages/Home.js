@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Title from "../components/Title";
 import Logo from "../components/Logo";
-// import Nav from "../components/Nav";
+import Nav from "../components/Nav";
 import { Link, useNavigate } from "react-router-dom";
 
-const getInterventions = async (setInterventions) => {
+export const getInterventions = async (setInterventions) => {
     let my_token = localStorage.getItem("token");
     try {
         const res = await axios.get("/interventions", {
@@ -22,7 +22,14 @@ const getInterventions = async (setInterventions) => {
 const Home = () => {
     const navigate = useNavigate();
     const [interventions, setInterventions] = useState(null);
-
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        try {
+            navigate("/form"); // Omit optional second argument
+        } catch (error) {
+            navigate("/error", { state: { message: "Failed to submit form" } }); // Pass optional second argument
+        }
+    };
     useEffect(() => {
         console.log("interventions changed:", interventions);
     }, [interventions]);
@@ -31,18 +38,36 @@ const Home = () => {
         getInterventions(setInterventions);
     }, []);
 
-    useNavigate(() => {});
     return (
         <>
             <Logo />
             <Title>Interventions</Title>
-            <br />
-            {/* <button onClick={() => getInterventions(setInterventions)}>
-                Get interventions test
-            </button> */}
-            {/* <button onClick={() => navigate(./pages/Form)}>
-                Get interventions test
-            </button> */}
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                }}
+            >
+                <div>
+                    <button
+                        style={{
+                            backgroundColor: "steelblue",
+                            fontWeight: "bold",
+                            color: "white",
+                        }}
+                        onClick={() => navigate("/form")}
+                    >
+                        Make an intervention
+                    </button>
+                </div>
+                <button
+                    style={{ backgroundColor: "red" }}
+                    onClick={() => navigate("/login")}
+                >
+                    Log out
+                </button>
+            </div>
             {interventions?.map((el, i) => {
                 const { id, customer, building, elevator } = el;
                 return (

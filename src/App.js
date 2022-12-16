@@ -11,9 +11,6 @@ import { Routes, Route, Outlet, Link } from "react-router-dom";
 function App() {
     return (
         <div className="App">
-            {/*             <header className="App-header">
-                <img src="img/logos/logo-rocket-elevators.png" alt="logo" />
-            </header> */}
             <Routes>
                 <Route path="/">
                     <Route path="home" element={<Home />} />
@@ -24,7 +21,7 @@ function App() {
                     <Route index element={<Login />} />
                 </Route>
                 <Route path="/form">
-                    <Route path="home" element={<Form />} />
+                    <Route path="form" element={<Form />} />
                     <Route index element={<Form />} />
                 </Route>
             </Routes>

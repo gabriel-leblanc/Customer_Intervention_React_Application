@@ -1,25 +1,18 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import Logo from "../components/Logo";
 import Title from "../components/Title";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Home from "./Home";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const authenticateUser = async (navigate) => {
     try {
         const res = await axios.post(
             "/authenticate?email=customer1@business.com&password=password123"
         );
-
-        // console.log("res is:", res);
-        // console.log("res is:", res.data);
         console.log("res is:", res.data.access_token);
-
         localStorage.setItem("token", res.data.access_token);
-        //navigate("/home");
-        // setToken(res.data.access_token);
         navigate("/home");
     } catch (error) {
         console.warn("[authenticateUser] error:", error);
@@ -55,7 +48,7 @@ const Login = (props) => {
                     <Form.Control type="password" placeholder="password" />
                 </Form.Group>
                 <br />
-                <Button style={{ "bs-btn-hover-bg": "black" }} type="submit">
+                <Button style={{ bsBtnHoverBg: "steelblue" }} type="submit">
                     Login
                 </Button>
             </Form>
