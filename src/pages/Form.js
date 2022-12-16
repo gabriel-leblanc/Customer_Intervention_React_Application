@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Title from "../components/Title";
 import Logo from "../components/Logo";
+import { Link, useNavigate } from "react-router-dom";
 
 const authenticateUser = async (setToken) => {
     try {
@@ -15,11 +16,12 @@ const authenticateUser = async (setToken) => {
     }
 };
 
-const getInterventions = async (token, setInterventions) => {
+const getInterventions = async (setInterventions) => {
+    let my_token = localStorage.getItem("token");
     try {
         const res = await axios.get("/interventions", {
             headers: {
-                Authorization: "Bearer " + token,
+                Authorization: "Bearer " + my_token,
             },
         });
 
@@ -28,25 +30,27 @@ const getInterventions = async (token, setInterventions) => {
         console.warn("[getInterventions] error:", error);
     }
 };
-
 const Form = () => {
+    const navigate = useNavigate();
     const [token, setToken] = useState("");
     const [interventions, setInterventions] = useState(null);
 
     useEffect(() => {
         console.log("token changed:", token);
+        localStorage.setItem("token", token);
     }, [token]);
 
     useEffect(() => {
         console.log("interventions changed:", interventions);
     }, [interventions]);
 
+    useNavigate(() => {});
     return (
         <>
             <Logo />
             <Title>Form</Title>
             <button onClick={() => authenticateUser(setToken)}>
-                Submit Axios
+                Submit Axios - set token
             </button>
             <br />
             <button
@@ -54,7 +58,7 @@ const Form = () => {
                     console.log("my token is:", token);
                 }}
             >
-                Test token
+                Test token - my token is
             </button>
             <br />
             <button
@@ -67,6 +71,14 @@ const Form = () => {
             <br />
             <button onClick={() => getInterventions(token, setInterventions)}>
                 Get interventions test
+            </button>
+            <br />
+            <button
+                onClick={() => {
+                    navigate("/login");
+                }}
+            >
+                go to Login
             </button>
         </>
     );

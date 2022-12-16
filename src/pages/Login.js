@@ -18,9 +18,9 @@ const authenticateUser = async (navigate) => {
         console.log("res is:", res.data.access_token);
 
         localStorage.setItem("token", res.data.access_token);
-        navigate("/home");
+        //navigate("/home");
         // setToken(res.data.access_token);
-        // navigate("/home");
+        navigate("/home");
     } catch (error) {
         console.warn("[authenticateUser] error:", error);
     }
@@ -55,7 +55,9 @@ const Login = (props) => {
                     <Form.Control type="password" placeholder="password" />
                 </Form.Group>
                 <br />
-                <Button type="submit">Login</Button>
+                <Button style={{ "bs-btn-hover-bg": "black" }} type="submit">
+                    Login
+                </Button>
             </Form>
         </>
     );

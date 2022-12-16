@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 // import Title from "./components/Title ";
-// import Form from "./pages/Form";
+import Form from "./pages/Form";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 
@@ -18,6 +18,14 @@ function App() {
                 <Route path="/">
                     <Route path="home" element={<Home />} />
                     <Route index element={<Login />} />
+                </Route>
+                <Route path="/login">
+                    <Route path="home" element={<Login />} />
+                    <Route index element={<Login />} />
+                </Route>
+                <Route path="/form">
+                    <Route path="home" element={<Form />} />
+                    <Route index element={<Form />} />
                 </Route>
             </Routes>
         </div>
