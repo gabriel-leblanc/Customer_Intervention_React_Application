@@ -8,9 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const authenticateUser = async (navigate) => {
     try {
-        const res = await axios.post(
-            "/authenticate?email=customer1@business.com&password=password123"
-        );
+        const res = await axios.post();
         console.log("res is:", res.data.access_token);
         localStorage.setItem("token", res.data.access_token);
         navigate("/home");
