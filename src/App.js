@@ -1,27 +1,30 @@
-import logo from "./logo.svg";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+// import Title from "./components/Title ";
+import Form from "./pages/Form";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+
+import { Routes, Route, Outlet, Link } from "react-router-dom";
+// token -> page login
 
 function App() {
     return (
         <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload. <br /> Just
-                    some random test...
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-                <input placeholder="Email Address"></input>
-                <input placeholder="password"></input>
-                <button>Log in</button>
-            </header>
+            <Routes>
+                <Route path="/">
+                    <Route path="home" element={<Home />} />
+                    <Route index element={<Login />} />
+                </Route>
+                <Route path="/login">
+                    <Route path="home" element={<Login />} />
+                    <Route index element={<Login />} />
+                </Route>
+                <Route path="/form">
+                    <Route path="form" element={<Form />} />
+                    <Route index element={<Form />} />
+                </Route>
+            </Routes>
         </div>
     );
 }
